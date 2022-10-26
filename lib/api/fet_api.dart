@@ -1,11 +1,12 @@
 import 'dart:io';
-
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
-class ColorApi {
+class Api {
   final _dio = Dio();
-  var baseUrl = 'https://www.thecolorapi.com/';
+  var baseUrl = 'https://protected-retreat-53516.herokuapp.com/get_prediction';
 
   // ignore: missing_return
   Future fetchServiceApi(File imageFile) async {
@@ -13,7 +14,17 @@ class ColorApi {
     // var url = 'https://www.thecolorapi.com/id?rgb=$red,$green,$blue';
 
     try {
-      final response = await _dio.get("${baseUrl}i");
+      Uint8List imagebytes = await imageFile.readAsBytes(); //convert to bytes
+      String base64string =
+          base64.encode(imagebytes); //convert bytes to base64 string
+      // print(base64string);
+      // final response = await _dio.get("${baseUrl}i");
+      // if (response.statusCode == 200) {
+      //   return response;
+      // }
+      final response = await _dio.post(baseUrl, data: {
+        "image": base64string,
+      });
       if (response.statusCode == 200) {
         return response;
       }

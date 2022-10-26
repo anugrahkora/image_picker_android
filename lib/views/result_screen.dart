@@ -1,12 +1,18 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker_android/api/fet_api.dart';
 import 'package:image_picker_android/components/cta_classify.dart';
+import 'package:image_picker_android/components/cta_result.dart';
+import 'package:image_picker_android/components/loader.dart';
+
+import '../models/models.dart';
 
 class ResultViewScreen extends StatefulWidget {
   final File image;
+ 
 
-  const ResultViewScreen({Key? key, required this.image}) : super(key: key);
+  const ResultViewScreen({Key? key, required this.image, }) : super(key: key);
 
   @override
   State<ResultViewScreen> createState() => _ResultViewScreemState();
@@ -33,8 +39,8 @@ class _ResultViewScreemState extends State<ResultViewScreen> {
         children: [
           Center(
             child: SizedBox(
-              width: size.width * 0.9,
-              height: size.height * 0.7,
+              // width: size.width * 0.9,
+              height: size.height * 0.6,
               child: Image.file(
                 widget.image,
                 // height: size.height * 0.5,
@@ -44,9 +50,19 @@ class _ResultViewScreemState extends State<ResultViewScreen> {
               ),
             ),
           ),
-          ctaClassify(size, () async{
-            
-          })
+          FutureBuilder(
+              future: Api().fetchServiceApi(widget.image),
+              builder: (context, snapshot) {
+                print(snapshot.connectionState);
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  loader(size);
+                }
+                if (snapshot.hasData) {
+                  final model = modelFromMap(snapshot.data.toString());
+                  return ctaResult(size, model.prediction, model.probability);
+                }
+                return loader(size);
+              })
         ],
       ),
     );

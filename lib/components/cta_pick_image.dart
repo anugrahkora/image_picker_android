@@ -14,11 +14,22 @@ Widget ctaPickImage(Size size, ImagePicker picker, void Function() onTap) {
         // height: 128.0,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.black.withOpacity(0.7),
+          border: Border.all(color: Colors.black.withOpacity(0.3), width: 4),
+          color: Color.fromARGB(255, 185, 185, 185),
+          boxShadow: const [
+            BoxShadow(
+                color: Color.fromARGB(21, 116, 116, 116),
+                offset: Offset(2, 10),
+                blurRadius: 10.0,
+                spreadRadius: 12.0),
+          ],
         ),
         child: const Text(
           'Pick image',
-          style: TextStyle(color: Colors.white, fontSize: 17.0),
+          style: TextStyle(
+              color: Color.fromARGB(255, 70, 70, 70),
+              fontSize: 19.0,
+              fontWeight: FontWeight.bold),
         ),
       ),
     ),

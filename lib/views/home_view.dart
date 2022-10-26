@@ -18,7 +18,7 @@ class HomeView extends StatelessWidget {
     AppBar appBar = AppBar(
       backgroundColor: Colors.black,
       elevation: 0.0,
-      title: const Text('Image Classifier'),
+      title: const Text('Covid19 Prediction'),
     );
     return Scaffold(
       appBar: appBar,
