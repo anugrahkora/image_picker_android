@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker_android/api/fet_api.dart';
@@ -9,10 +10,12 @@ import 'package:image_picker_android/components/loader.dart';
 import '../models/models.dart';
 
 class ResultViewScreen extends StatefulWidget {
-  final File image;
- 
+  final Uint8List image;
 
-  const ResultViewScreen({Key? key, required this.image, }) : super(key: key);
+  const ResultViewScreen({
+    Key? key,
+    required this.image,
+  }) : super(key: key);
 
   @override
   State<ResultViewScreen> createState() => _ResultViewScreemState();
@@ -41,7 +44,7 @@ class _ResultViewScreemState extends State<ResultViewScreen> {
             child: SizedBox(
               // width: size.width * 0.9,
               height: size.height * 0.6,
-              child: Image.file(
+              child: Image.memory(
                 widget.image,
                 // height: size.height * 0.5,
                 key: imageKey,
@@ -53,11 +56,13 @@ class _ResultViewScreemState extends State<ResultViewScreen> {
           FutureBuilder(
               future: Api().fetchServiceApi(widget.image),
               builder: (context, snapshot) {
+                print(snapshot.hasData);
                 print(snapshot.connectionState);
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   loader(size);
                 }
                 if (snapshot.hasData) {
+                  print(snapshot.data);
                   final model = modelFromMap(snapshot.data.toString());
                   return ctaResult(size, model.prediction, model.probability);
                 }

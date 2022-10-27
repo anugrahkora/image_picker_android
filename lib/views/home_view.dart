@@ -30,13 +30,13 @@ class HomeView extends StatelessWidget {
           final XFile? image = await picker.pickImage(
               source: ImageSource.gallery, imageQuality: 70);
           // ignore: use_build_context_synchronously
-
           if (image != null) {
+            final bytes = await image.readAsBytes();
             // ignore: use_build_context_synchronously
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => ResultViewScreen(
-                  image: File(image.path),
+                  image: bytes,
                 ),
               ),
             );

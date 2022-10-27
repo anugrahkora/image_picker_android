@@ -10,12 +10,12 @@ Widget ctaPickImage(Size size, ImagePicker picker, void Function() onTap) {
       onPressed: onTap,
       child: Container(
         alignment: Alignment.center,
-        width: size.width * 0.5,
+        width: size.width > 500 ? 250.0 : size.width * 0.5,
         // height: 128.0,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(color: Colors.black.withOpacity(0.3), width: 4),
-          color: Color.fromARGB(255, 185, 185, 185),
+          color: const Color.fromARGB(255, 185, 185, 185),
           boxShadow: const [
             BoxShadow(
                 color: Color.fromARGB(21, 116, 116, 116),

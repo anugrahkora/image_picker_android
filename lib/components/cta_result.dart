@@ -4,13 +4,13 @@ Widget ctaResult(Size size, String textPrediction, String textProbability) {
   return Center(
     child: Container(
       alignment: Alignment.center,
-      width: size.width * 0.9,
+      width: size.width > 800 ? 800 : size.width * 0.9,
       height: size.height * 0.1,
       decoration: BoxDecoration(
           color: Colors.green.shade400,
           borderRadius: const BorderRadius.all(Radius.circular(10.0))),
       child: SizedBox(
-        width: size.width * 0.5,
+        width: size.width > 500 ? 500 : size.width * 0.5,
         height: size.height * 0.08,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
